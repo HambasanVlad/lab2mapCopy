@@ -22,33 +22,45 @@ public class RelationalExp implements Exp {
 
     @Override
     public Value eval(MyIDictionary<String, Value> tbl, MyIHeap<Integer, Value> heap) throws MyException {
-        // Pass heap
         Value v1 = e1.eval(tbl, heap);
-
-        if (!v1.getType().equals(new IntType())) {
-            throw new MyException("First operand is not an integer.");
-        }
-
-        // Pass heap
         Value v2 = e2.eval(tbl, heap);
 
-        if (!v2.getType().equals(new IntType())) {
-            throw new MyException("Second operand is not an integer.");
+        // Verificăm dacă tipurile sunt identice
+        if (!v1.getType().equals(v2.getType())) {
+            throw new MyException("Operands have different types.");
         }
 
-        IntValue i1 = (IntValue) v1;
-        IntValue i2 = (IntValue) v2;
-        int n1 = i1.getVal();
-        int n2 = i2.getVal();
+        // Cazul 1: Comparăm Numere Întregi (IntType)
+        if (v1.getType().equals(new IntType())) {
+            IntValue i1 = (IntValue) v1;
+            IntValue i2 = (IntValue) v2;
+            int n1 = i1.getVal();
+            int n2 = i2.getVal();
 
-        switch (op) {
-            case "<": return new BoolValue(n1 < n2);
-            case "<=": return new BoolValue(n1 <= n2);
-            case "==": return new BoolValue(n1 == n2);
-            case "!=": return new BoolValue(n1 != n2);
-            case ">": return new BoolValue(n1 > n2);
-            case ">=": return new BoolValue(n1 >= n2);
-            default: throw new MyException("Invalid relational operator.");
+            switch (op) {
+                case "<": return new BoolValue(n1 < n2);
+                case "<=": return new BoolValue(n1 <= n2);
+                case "==": return new BoolValue(n1 == n2);
+                case "!=": return new BoolValue(n1 != n2);
+                case ">": return new BoolValue(n1 > n2);
+                case ">=": return new BoolValue(n1 >= n2);
+                default: throw new MyException("Invalid relational operator.");
+            }
+        }
+        // Cazul 2: Comparăm Valori Booleene (BoolType) - CRITIC pentru RepeatUntil
+        else if (v1.getType().equals(new BoolType())) {
+            BoolValue b1 = (BoolValue) v1;
+            BoolValue b2 = (BoolValue) v2;
+            boolean val1 = b1.getVal();
+            boolean val2 = b2.getVal();
+
+            if (op.equals("==")) return new BoolValue(val1 == val2);
+            if (op.equals("!=")) return new BoolValue(val1 != val2);
+
+            throw new MyException("Invalid relational operator for booleans (only == and != are allowed).");
+        }
+        else {
+            throw new MyException("Operands must be of type Int or Bool.");
         }
     }
 
