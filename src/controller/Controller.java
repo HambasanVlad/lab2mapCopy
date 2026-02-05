@@ -6,10 +6,7 @@ import model.value.RefValue;
 import model.value.Value;
 import repository.IRepository;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -23,7 +20,7 @@ public class Controller {
 
     public Controller(IRepository repo) {
         this.repo = repo;
-        // FIX: Inițializăm executorul AICI pentru a fi disponibil oricând, inclusiv în GUI
+        // Inițializăm executorul la start
         this.executor = Executors.newFixedThreadPool(2);
     }
 
@@ -35,20 +32,20 @@ public class Controller {
         return repo;
     }
 
-    // --- GARBAGE COLLECTOR OPTIMIZAT ---
+    // --- GARBAGE COLLECTOR ---
     Map<Integer, Value> safeGarbageCollector(List<Integer> symTableAddr, Map<Integer, Value> heap) {
-        List<Integer> referencedAddresses = new java.util.ArrayList<>(symTableAddr);
-
-        // Iterăm pentru a găsi referințele indirecte (Heap -> Heap)
+        List<Integer> referencedAddresses = new ArrayList<>(symTableAddr);
         boolean change = true;
+
+        // Căutăm referințe indirecte (heap -> heap)
         while (change) {
             change = false;
             List<Integer> newAddresses = heap.entrySet().stream()
-                    .filter(e -> referencedAddresses.contains(e.getKey())) // Doar nodurile deja accesibile
+                    .filter(e -> referencedAddresses.contains(e.getKey()))
                     .map(Map.Entry::getValue)
                     .filter(v -> v instanceof RefValue)
                     .map(v -> ((RefValue) v).getAddr())
-                    .filter(addr -> !referencedAddresses.contains(addr)) // Doar ce nu am colectat deja
+                    .filter(addr -> !referencedAddresses.contains(addr))
                     .collect(Collectors.toList());
 
             if (!newAddresses.isEmpty()) {
@@ -57,13 +54,11 @@ public class Controller {
             }
         }
 
-        // Păstrăm în Heap doar ce e în lista finală de adrese valide
         return heap.entrySet().stream()
                 .filter(e -> referencedAddresses.contains(e.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    // --- CONCURRENCY METHODS ---
     public List<PrgState> removeCompletedPrg(List<PrgState> inPrgList) {
         return inPrgList.stream()
                 .filter(PrgState::isNotCompleted)
@@ -71,68 +66,58 @@ public class Controller {
     }
 
     public void oneStepForAllPrg(List<PrgState> prgList) throws InterruptedException {
-        // FIX DE SIGURANȚĂ: Dacă executorul a fost închis sau e null, îl recreăm
-        if (executor == null || executor.isShutdown()) {
-            executor = Executors.newFixedThreadPool(2);
-        }
+        // Logare înainte de execuție (opțional, pentru debug)
+        // prgList.forEach(p -> {try { repo.logPrgStateExec(p); } catch (MyException e) {}});
 
-        // 1. Logare stare înainte de execuție
-        prgList.forEach(prg -> {
-            try {
-                repo.logPrgStateExec(prg);
-                if (displayFlag) System.out.println(prg.toString());
-            } catch (MyException e) {
-                System.out.println("Eroare la logare: " + e.getMessage());
-            }
-        });
-
-        // 2. Pregătire callables
+        // 1. PREGĂTIRE CALLABLES - FILTRU CORECTAT
+        // Executăm DOAR programele care NU sunt terminate (au stiva ne-goală)
         List<Callable<PrgState>> callList = prgList.stream()
+                .filter(p -> p.isNotCompleted()) // <--- AICI ERA PROBLEMA (fără !)
                 .map((PrgState p) -> (Callable<PrgState>) (p::oneStep))
                 .collect(Collectors.toList());
 
-        // 3. Execuție concurentă
+        // 2. EXECUȚIE CONCURENTĂ
+        // invokeAll blochează până când toate thread-urile termină pasul curent
         List<PrgState> newPrgList = executor.invokeAll(callList).stream()
                 .map(future -> {
                     try {
                         return future.get();
                     } catch (ExecutionException | InterruptedException e) {
-                        // Ignorăm erorile de tip "thread terminat"
-                        if (!(e.getCause() instanceof MyException)) {
-                            System.out.println("Eroare thread: " + e.getMessage());
-                        }
+                        // Aici prindem erorile din thread-uri pentru a nu crăpa tot GUI-ul
+                        System.out.println("Eroare execuție thread: " + e.getMessage());
+                        if (e.getCause() instanceof MyException)
+                            System.out.println("Detalii MyException: " + e.getCause().getMessage());
                         return null;
                     }
                 })
-                .filter(Objects::nonNull)
+                .filter(Objects::nonNull) // Eliminăm null-urile generate de erori sau instrucțiuni simple
                 .collect(Collectors.toList());
 
-        // 4. Adăugare fire noi
+        // 3. ADĂUGARE THREAD-URI NOI
         prgList.addAll(newPrgList);
 
-        // 5. Logare stare după execuție
+        // 4. LOGARE STARE DUPĂ EXECUȚIE
+        // Iterăm o copie sau lista direct, dar sincronizat logic de invokeAll
         prgList.forEach(prg -> {
             try {
                 repo.logPrgStateExec(prg);
                 if (displayFlag) System.out.println(prg.toString());
-            } catch (MyException e) {
-                System.out.println("Eroare la logare finală: " + e.getMessage());
+            } catch (MyException | ConcurrentModificationException e) {
+                // Prindem CME doar ca să nu blocheze GUI-ul, deși nu ar trebui să mai apară
+                System.out.println("Eroare la logare: " + e.getMessage());
             }
         });
 
+        // 5. SALVARE ÎN REPO
         repo.setPrgList(prgList);
     }
 
     public void allStep() throws InterruptedException {
-        // Asigurăm că executorul există
-        if (executor == null || executor.isShutdown()) {
-            executor = Executors.newFixedThreadPool(2);
-        }
-
+        executor = Executors.newFixedThreadPool(2);
         List<PrgState> prgList = removeCompletedPrg(repo.getPrgList());
 
         while (prgList.size() > 0) {
-            // Garbage Collector apelat corect
+            // Garbage Collector
             List<Integer> symTableAddresses = prgList.stream()
                     .map(p -> p.getSymTable().getContent().values())
                     .flatMap(Collection::stream)
@@ -140,24 +125,20 @@ public class Controller {
                     .map(v -> ((RefValue) v).getAddr())
                     .collect(Collectors.toList());
 
-            PrgState firstPrg = prgList.get(0);
-            firstPrg.getHeap().setContent(
-                    safeGarbageCollector(symTableAddresses, firstPrg.getHeap().getContent())
-            );
+            if (!prgList.isEmpty()) {
+                prgList.get(0).getHeap().setContent(
+                        safeGarbageCollector(symTableAddresses, prgList.get(0).getHeap().getContent())
+                );
+            }
 
             oneStepForAllPrg(prgList);
+
+            // Eliminăm programele terminate pentru bucla while,
+            // dar ele rămân în repo pentru a fi văzute în GUI la final
             prgList = removeCompletedPrg(repo.getPrgList());
         }
 
-        // NOTĂ: Nu mai dăm shutdown aici pentru a nu strica GUI-ul dacă utilizatorul vrea să ruleze din nou.
-        // Executorul se va închide când aplicația se termină complet.
+        executor.shutdownNow();
         repo.setPrgList(prgList);
-    }
-
-    // Metodă opțională pentru a închide corect resursele la final de tot (dacă e nevoie)
-    public void shutdownExecutor() {
-        if (executor != null && !executor.isShutdown()) {
-            executor.shutdownNow();
-        }
     }
 }

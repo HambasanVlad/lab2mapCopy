@@ -77,20 +77,23 @@ public class ProgramExecutorController {
 
     @FXML
     public void runOneStep() {
-        if (controller.getRepo().getPrgList().size() == 0) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
+        // Curățăm lista de programe terminate înainte de a executa un pas nou
+        List<PrgState> prgList = controller.removeCompletedPrg(controller.getRepo().getPrgList());
+
+        if (prgList.size() > 0) {
+            try {
+                controller.oneStepForAllPrg(prgList);
+                populate(); // Actualizăm interfața
+            } catch (InterruptedException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Info");
             alert.setHeaderText("Done");
             alert.setContentText("Program finished!");
-            alert.showAndWait();
-            return;
-        }
-        try {
-            controller.oneStepForAllPrg(controller.getRepo().getPrgList());
-            populate();
-        } catch (InterruptedException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
     }
