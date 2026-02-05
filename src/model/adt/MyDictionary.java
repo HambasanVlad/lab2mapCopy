@@ -1,6 +1,7 @@
 package model.adt;
 
 import exception.MyException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,11 +14,13 @@ public class MyDictionary<K, V> implements MyIDictionary<K, V> {
 
     @Override
     public void put(K key, V value) throws MyException {
+        // Punem valoarea direct. HashMap permite suprascrierea.
         map.put(key, value);
     }
 
     @Override
     public void update(K key, V value) throws MyException {
+        // Update ar trebui să verifice dacă cheia există deja
         if (!map.containsKey(key)) {
             throw new MyException("Variable " + key + " is not defined. Cannot update.");
         }
@@ -28,7 +31,6 @@ public class MyDictionary<K, V> implements MyIDictionary<K, V> {
     public V lookup(K key) throws MyException {
         V value = map.get(key);
         if (value == null) {
-            // Verificare suplimentară pentru siguranță, deși containsKey e mai bun
             throw new MyException("Variable " + key + " is not defined.");
         }
         return value;
@@ -54,13 +56,15 @@ public class MyDictionary<K, V> implements MyIDictionary<K, V> {
 
     @Override
     public MyIDictionary<K, V> deepCopy() {
-        MyIDictionary<K, V> toReturn = new MyDictionary<>();
+        MyDictionary<K, V> toReturn = new MyDictionary<>();
+        // Facem o copie a structurii map-ului.
+        // Valorile (Value) sunt imutabile (int, bool), deci e ok să copiem referințele lor.
         for (Map.Entry<K, V> entry : map.entrySet()) {
             try {
                 toReturn.put(entry.getKey(), entry.getValue());
             } catch (MyException e) {
-                // Această excepție nu ar trebui să apară la un put simplu pe un map nou
-                System.err.println("Eroare neașteptată la deepCopy: " + e.getMessage());
+                // Această excepție nu va fi aruncată niciodată aici, deoarece punem într-un map gol
+                System.out.println("Eroare la deepCopy: " + e.getMessage());
             }
         }
         return toReturn;
@@ -68,13 +72,16 @@ public class MyDictionary<K, V> implements MyIDictionary<K, V> {
 
     @Override
     public String toString() {
+        // Optimizare: Formatare mai curată pentru GUI
         StringBuilder sb = new StringBuilder();
+        sb.append("{ ");
         for (Map.Entry<K, V> entry : map.entrySet()) {
             sb.append(entry.getKey().toString())
-                    .append(" -> ")
+                    .append("->")
                     .append(entry.getValue().toString())
-                    .append("\n");
+                    .append("; ");
         }
+        sb.append("}");
         return sb.toString();
     }
 }

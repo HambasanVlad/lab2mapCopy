@@ -154,11 +154,19 @@ public class ProgramExecutorController {
     }
 
     private void populateExeStack(PrgState state) {
-        List<String> stack = new ArrayList<>();
-        // Atenție: Aici trebuie să iterezi stiva. Dacă MyStack nu expune elementele,
-        // trebuie să adaugi o metodă în MyStack (ex: getReverse()) sau să folosești toString.
-        // Pentru moment folosim toString-ul stivei, dar ar fi bine să modifici MyStack să returneze un List<T>.
-        stack.add(state.getStk().toString());
-        executionStackListView.setItems(FXCollections.observableArrayList(stack));
+        // Luăm stiva ca Iterable (presupunând că MyStack are o metodă getReverse sau toString corect)
+        // Cea mai simplă metodă e să luăm String-ul și să îl curățăm,
+        // dar ideal ar fi să iterezi.
+
+        // Varianta simplă care merge cu codul tău curent:
+        executionStackListView.getItems().clear();
+
+        // Truc: Afișăm reprezentarea textuală a stivei
+        String stackStr = state.getStk().toString();
+        // Dacă toString-ul tău e de forma "[stmt1, stmt2]", îl punem în listă
+        executionStackListView.getItems().add(stackStr);
+
+        // RECOMANDARE: Dacă vrei să vezi statement-urile unul sub altul,
+        // trebuie să modifici în MyStack să returneze List<IStmt>.
     }
 }

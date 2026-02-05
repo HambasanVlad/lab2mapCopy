@@ -21,30 +21,33 @@ public class RepeatUntilStmt implements IStmt {
 
     @Override
     public PrgState execute(PrgState state) throws MyException {
-        // Requirement: stmt1 is executed as long as exp2 is not true.
-        // Execution steps from PDF:
-        // 1. pop the statement (done by the interpreter before calling execute)
-        // 2. create: stmt1; (while(!exp2) stmt1)
-        // 3. push the new statement on the stack
+        // Logica: repeat S until C  ===>  execută S, apoi cât timp (!C) execută S
+        // Traducere în statement-uri existente:
+        // S; while(!C) S
 
-        // Since we don't have a specific NotExp, we simulate !exp using (exp == false)
+        // 1. Creăm expresia de negație: (!exp) este simulat prin (exp == false)
+        // Verifică în proiectul tău dacă "==" este operatorul corect în RelationalExp (de obicei este).
         Exp notExp = new RelationalExp("==", exp, new ValueExp(new BoolValue(false)));
 
-        IStmt newStmt = new CompStmt(stmt, new WhileStmt(notExp, stmt));
-        state.getStk().push(newStmt);
+        // 2. Creăm statement-ul compus: stmt urmat de while
+        IStmt converted = new CompStmt(stmt, new WhileStmt(notExp, stmt));
+
+        // 3. Punem rezultatul pe stiva de execuție
+        state.getStk().push(converted);
 
         return null;
     }
 
     @Override
     public MyIDictionary<String, Type> typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
-        // Requirement: verifies if exp2 has type bool and typecheck stmt1
+        // Verificăm dacă condiția este de tip bool
         Type typeExp = exp.typecheck(typeEnv);
         if (typeExp.equals(new BoolType())) {
+            // Verificăm corpul instrucțiunii (stmt) într-un mediu clonat
             stmt.typecheck(typeEnv.deepCopy());
             return typeEnv;
         } else {
-            throw new MyException("RepeatUntil: condition is not of type bool");
+            throw new MyException("RepeatUntil: condiția (exp) nu este de tip boolean!");
         }
     }
 
