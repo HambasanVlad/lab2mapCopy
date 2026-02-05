@@ -1,15 +1,15 @@
 package model.adt;
 
 import exception.MyException;
-import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.concurrent.ConcurrentLinkedDeque; // Use this for thread safety
 
 public class MyStack<T> implements MyIStack<T> {
-    // java.util.Stack is old; ArrayDeque is the recommended implementation for stack operations.
+    // ConcurrentLinkedDeque is thread-safe and its iterator will not throw ConcurrentModificationException
     private Deque<T> stack;
 
     public MyStack() {
-        this.stack = new ArrayDeque<>();
+        this.stack = new ConcurrentLinkedDeque<>();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class MyStack<T> implements MyIStack<T> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        // Iterate to print from top to bottom
+        // Safe iteration with ConcurrentLinkedDeque
         for (T elem : stack) {
             sb.append(elem.toString()).append("\n");
         }

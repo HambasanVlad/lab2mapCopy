@@ -450,14 +450,12 @@ y=3
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -467,14 +465,12 @@ while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -484,14 +480,12 @@ while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -501,14 +495,12 @@ while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -518,14 +510,12 @@ while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -535,14 +525,12 @@ while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -552,14 +540,12 @@ while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -569,14 +555,12 @@ while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -586,14 +570,12 @@ while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -603,14 +585,12 @@ while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -620,14 +600,12 @@ while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -637,14 +615,12 @@ while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -654,14 +630,12 @@ while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -671,14 +645,12 @@ while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -688,14 +660,12 @@ while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -705,14 +675,12 @@ while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -722,14 +690,12 @@ while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -744,7 +710,6 @@ ID: 2
 --- Symbol Table ---
 { v->0; x->1; y->0; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -754,14 +719,12 @@ ID: 2
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -771,14 +734,12 @@ while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -788,82 +749,12 @@ while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
-
---- File Table ---
-{ }
---- Heap ---
-
-----------------------------------------------------------------
-
-ID: 1
---- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
-
---- Symbol Table ---
-{ v->2; x->1; y->3; }
---- Output ---
-10
-
---- File Table ---
-{ }
---- Heap ---
-
-----------------------------------------------------------------
-
-ID: 1
---- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
-
---- Symbol Table ---
-{ v->2; x->1; y->3; }
---- Output ---
-10
-
---- File Table ---
-{ }
---- Heap ---
-
-----------------------------------------------------------------
-
-ID: 1
---- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
-
---- Symbol Table ---
-{ v->2; x->1; y->3; }
---- Output ---
-10
-
---- File Table ---
-{ }
---- Heap ---
-
-----------------------------------------------------------------
-
-ID: 1
---- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
-
---- Symbol Table ---
-{ v->2; x->1; y->3; }
---- Output ---
-10
 
 --- File Table ---
 { }
@@ -876,9 +767,8 @@ ID: 3
 (print(v);v=(v - 1))
 
 --- Symbol Table ---
-{ v->1; x->1; y->3; }
+{ v->1; x->1; y->0; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -888,14 +778,12 @@ ID: 3
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -905,14 +793,12 @@ while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
 
 --- File Table ---
 { }
@@ -922,14 +808,86 @@ while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
 
 ID: 1
 --- Execution Stack ---
-fork((print(v);v=(v - 1)))
-v=(v + 1)
-while(((v == 3) == false)) (fork((print(v);v=(v - 1)));v=(v + 1))
+nop
+print((v * 10))
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->3; x->1; y->3; }
 --- Output ---
-10
+
+--- File Table ---
+{ }
+--- Heap ---
+
+----------------------------------------------------------------
+
+ID: 4
+--- Execution Stack ---
+(print(v);v=(v - 1))
+
+--- Symbol Table ---
+{ v->2; x->1; y->0; }
+--- Output ---
+
+--- File Table ---
+{ }
+--- Heap ---
+
+----------------------------------------------------------------
+
+ID: 1
+--- Execution Stack ---
+nop
+print((v * 10))
+
+--- Symbol Table ---
+{ v->3; x->1; y->3; }
+--- Output ---
+
+--- File Table ---
+{ }
+--- Heap ---
+
+----------------------------------------------------------------
+
+ID: 1
+--- Execution Stack ---
+nop
+print((v * 10))
+
+--- Symbol Table ---
+{ v->3; x->1; y->3; }
+--- Output ---
+
+--- File Table ---
+{ }
+--- Heap ---
+
+----------------------------------------------------------------
+
+ID: 1
+--- Execution Stack ---
+nop
+print((v * 10))
+
+--- Symbol Table ---
+{ v->3; x->1; y->3; }
+--- Output ---
+
+--- File Table ---
+{ }
+--- Heap ---
+
+----------------------------------------------------------------
+
+ID: 1
+--- Execution Stack ---
+nop
+print((v * 10))
+
+--- Symbol Table ---
+{ v->3; x->1; y->3; }
+--- Output ---
 
 --- File Table ---
 { }
@@ -943,7 +901,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -957,7 +915,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -971,7 +929,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -985,7 +943,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -999,7 +957,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1013,7 +971,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1027,7 +985,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1041,7 +999,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1055,7 +1013,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1069,7 +1027,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1083,7 +1041,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1097,7 +1055,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1111,7 +1069,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1125,7 +1083,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1139,7 +1097,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1153,7 +1111,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1167,7 +1125,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1183,7 +1141,7 @@ v=(v - 1)
 --- Symbol Table ---
 { v->0; x->1; y->0; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1197,7 +1155,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1211,7 +1169,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1225,63 +1183,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
-
---- File Table ---
-{ }
---- Heap ---
-
-----------------------------------------------------------------
-
-ID: 1
---- Execution Stack ---
-
---- Symbol Table ---
-{ v->3; x->1; y->3; }
---- Output ---
-10
-
---- File Table ---
-{ }
---- Heap ---
-
-----------------------------------------------------------------
-
-ID: 1
---- Execution Stack ---
-
---- Symbol Table ---
-{ v->3; x->1; y->3; }
---- Output ---
-10
-
---- File Table ---
-{ }
---- Heap ---
-
-----------------------------------------------------------------
-
-ID: 1
---- Execution Stack ---
-
---- Symbol Table ---
-{ v->3; x->1; y->3; }
---- Output ---
-10
-
---- File Table ---
-{ }
---- Heap ---
-
-----------------------------------------------------------------
-
-ID: 1
---- Execution Stack ---
-
---- Symbol Table ---
-{ v->3; x->1; y->3; }
---- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1295,9 +1197,9 @@ print(v)
 v=(v - 1)
 
 --- Symbol Table ---
-{ v->1; x->1; y->3; }
+{ v->1; x->1; y->0; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1311,7 +1213,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1325,7 +1227,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1339,7 +1241,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1349,12 +1251,13 @@ ID: 1
 
 ID: 4
 --- Execution Stack ---
-(print(v);v=(v - 1))
+print(v)
+v=(v - 1)
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->2; x->1; y->0; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1368,7 +1271,7 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1382,7 +1285,63 @@ ID: 1
 --- Symbol Table ---
 { v->3; x->1; y->3; }
 --- Output ---
-10
+30
+
+--- File Table ---
+{ }
+--- Heap ---
+
+----------------------------------------------------------------
+
+ID: 1
+--- Execution Stack ---
+
+--- Symbol Table ---
+{ v->3; x->1; y->3; }
+--- Output ---
+30
+
+--- File Table ---
+{ }
+--- Heap ---
+
+----------------------------------------------------------------
+
+ID: 1
+--- Execution Stack ---
+
+--- Symbol Table ---
+{ v->3; x->1; y->3; }
+--- Output ---
+30
+
+--- File Table ---
+{ }
+--- Heap ---
+
+----------------------------------------------------------------
+
+ID: 1
+--- Execution Stack ---
+
+--- Symbol Table ---
+{ v->3; x->1; y->3; }
+--- Output ---
+30
+
+--- File Table ---
+{ }
+--- Heap ---
+
+----------------------------------------------------------------
+
+ID: 1
+--- Execution Stack ---
+
+--- Symbol Table ---
+{ v->3; x->1; y->3; }
+--- Output ---
+30
 
 --- File Table ---
 { }
@@ -1398,7 +1357,7 @@ v=(v - 1)
 --- Symbol Table ---
 { v->0; x->1; y->0; }
 --- Output ---
-10
+30
 
 --- File Table ---
 { }
@@ -1412,41 +1371,9 @@ print(v)
 v=(v - 1)
 
 --- Symbol Table ---
-{ v->1; x->1; y->3; }
+{ v->1; x->1; y->0; }
 --- Output ---
-10
-
---- File Table ---
-{ }
---- Heap ---
-
-----------------------------------------------------------------
-
-ID: 2
---- Execution Stack ---
-
---- Symbol Table ---
-{ v->-1; x->1; y->0; }
---- Output ---
-10
-0
-1
-
---- File Table ---
-{ }
---- Heap ---
-
-----------------------------------------------------------------
-
-ID: 3
---- Execution Stack ---
-
---- Symbol Table ---
-{ v->0; x->1; y->3; }
---- Output ---
-10
-0
-1
+30
 
 --- File Table ---
 { }
@@ -1460,11 +1387,9 @@ print(v)
 v=(v - 1)
 
 --- Symbol Table ---
-{ v->2; x->1; y->3; }
+{ v->2; x->1; y->0; }
 --- Output ---
-10
-0
-1
+30
 
 --- File Table ---
 { }
@@ -1478,9 +1403,10 @@ ID: 2
 --- Symbol Table ---
 { v->-1; x->1; y->0; }
 --- Output ---
-10
+30
 0
 1
+2
 
 --- File Table ---
 { }
@@ -1492,107 +1418,9 @@ ID: 3
 --- Execution Stack ---
 
 --- Symbol Table ---
-{ v->0; x->1; y->3; }
+{ v->0; x->1; y->0; }
 --- Output ---
-10
-0
-1
-
---- File Table ---
-{ }
---- Heap ---
-
-----------------------------------------------------------------
-
-ID: 2
---- Execution Stack ---
-
---- Symbol Table ---
-{ v->-1; x->1; y->0; }
---- Output ---
-10
-0
-1
-
---- File Table ---
-{ }
---- Heap ---
-
-----------------------------------------------------------------
-
-ID: 3
---- Execution Stack ---
-
---- Symbol Table ---
-{ v->0; x->1; y->3; }
---- Output ---
-10
-0
-1
-
---- File Table ---
-{ }
---- Heap ---
-
-----------------------------------------------------------------
-
-ID: 4
---- Execution Stack ---
-print(v)
-v=(v - 1)
-
---- Symbol Table ---
-{ v->2; x->1; y->3; }
---- Output ---
-10
-0
-1
-
---- File Table ---
-{ }
---- Heap ---
-
-----------------------------------------------------------------
-
-ID: 2
---- Execution Stack ---
-
---- Symbol Table ---
-{ v->-1; x->1; y->0; }
---- Output ---
-10
-0
-1
-
---- File Table ---
-{ }
---- Heap ---
-
-----------------------------------------------------------------
-
-ID: 3
---- Execution Stack ---
-
---- Symbol Table ---
-{ v->0; x->1; y->3; }
---- Output ---
-10
-0
-1
-
---- File Table ---
-{ }
---- Heap ---
-
-----------------------------------------------------------------
-
-ID: 4
---- Execution Stack ---
-
---- Symbol Table ---
-{ v->1; x->1; y->3; }
---- Output ---
-10
+30
 0
 1
 2
@@ -1607,9 +1435,43 @@ ID: 4
 --- Execution Stack ---
 
 --- Symbol Table ---
-{ v->1; x->1; y->3; }
+{ v->1; x->1; y->0; }
 --- Output ---
-10
+30
+0
+1
+2
+
+--- File Table ---
+{ }
+--- Heap ---
+
+----------------------------------------------------------------
+
+ID: 2
+--- Execution Stack ---
+
+--- Symbol Table ---
+{ v->-1; x->1; y->0; }
+--- Output ---
+30
+0
+1
+2
+
+--- File Table ---
+{ }
+--- Heap ---
+
+----------------------------------------------------------------
+
+ID: 3
+--- Execution Stack ---
+
+--- Symbol Table ---
+{ v->0; x->1; y->0; }
+--- Output ---
+30
 0
 1
 2
@@ -1624,9 +1486,43 @@ ID: 4
 --- Execution Stack ---
 
 --- Symbol Table ---
-{ v->1; x->1; y->3; }
+{ v->1; x->1; y->0; }
 --- Output ---
-10
+30
+0
+1
+2
+
+--- File Table ---
+{ }
+--- Heap ---
+
+----------------------------------------------------------------
+
+ID: 2
+--- Execution Stack ---
+
+--- Symbol Table ---
+{ v->-1; x->1; y->0; }
+--- Output ---
+30
+0
+1
+2
+
+--- File Table ---
+{ }
+--- Heap ---
+
+----------------------------------------------------------------
+
+ID: 3
+--- Execution Stack ---
+
+--- Symbol Table ---
+{ v->0; x->1; y->0; }
+--- Output ---
+30
 0
 1
 2
@@ -1641,9 +1537,60 @@ ID: 4
 --- Execution Stack ---
 
 --- Symbol Table ---
-{ v->1; x->1; y->3; }
+{ v->1; x->1; y->0; }
 --- Output ---
-10
+30
+0
+1
+2
+
+--- File Table ---
+{ }
+--- Heap ---
+
+----------------------------------------------------------------
+
+ID: 2
+--- Execution Stack ---
+
+--- Symbol Table ---
+{ v->-1; x->1; y->0; }
+--- Output ---
+30
+0
+1
+2
+
+--- File Table ---
+{ }
+--- Heap ---
+
+----------------------------------------------------------------
+
+ID: 3
+--- Execution Stack ---
+
+--- Symbol Table ---
+{ v->0; x->1; y->0; }
+--- Output ---
+30
+0
+1
+2
+
+--- File Table ---
+{ }
+--- Heap ---
+
+----------------------------------------------------------------
+
+ID: 4
+--- Execution Stack ---
+
+--- Symbol Table ---
+{ v->1; x->1; y->0; }
+--- Output ---
+30
 0
 1
 2

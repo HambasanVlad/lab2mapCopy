@@ -21,18 +21,17 @@ public class RepeatUntilStmt implements IStmt {
 
     @Override
     public PrgState execute(PrgState state) throws MyException {
-        // Logica: repeat S until C  ===>  execută S, apoi cât timp (!C) execută S
-        // Traducere în statement-uri existente:
-        // S; while(!C) S
+        // Logic: repeat stmt until exp
+        // Equivalent to: stmt; while(!exp) stmt
 
-        // 1. Creăm expresia de negație: (!exp) este simulat prin (exp == false)
-        // Verifică în proiectul tău dacă "==" este operatorul corect în RelationalExp (de obicei este).
+        // 1. Create the negation of the expression (!exp)
+        // We simulate !exp by checking (exp == false)
         Exp notExp = new RelationalExp("==", exp, new ValueExp(new BoolValue(false)));
 
-        // 2. Creăm statement-ul compus: stmt urmat de while
+        // 2. Create the equivalent statement
         IStmt converted = new CompStmt(stmt, new WhileStmt(notExp, stmt));
 
-        // 3. Punem rezultatul pe stiva de execuție
+        // 3. Push the new statement onto the stack
         state.getStk().push(converted);
 
         return null;
@@ -40,14 +39,12 @@ public class RepeatUntilStmt implements IStmt {
 
     @Override
     public MyIDictionary<String, Type> typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
-        // Verificăm dacă condiția este de tip bool
         Type typeExp = exp.typecheck(typeEnv);
         if (typeExp.equals(new BoolType())) {
-            // Verificăm corpul instrucțiunii (stmt) într-un mediu clonat
             stmt.typecheck(typeEnv.deepCopy());
             return typeEnv;
         } else {
-            throw new MyException("RepeatUntil: condiția (exp) nu este de tip boolean!");
+            throw new MyException("RepeatUntil: condition is not boolean!");
         }
     }
 
