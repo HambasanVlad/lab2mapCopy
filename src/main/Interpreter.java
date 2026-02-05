@@ -119,6 +119,49 @@ public class Interpreter {
                                                                 new PrintStmt(new ReadHeapExp(new VarExp("a")))))))))));
         examples.add(ex11);
 
+        // --- Problem 1 (Exam) ---
+        // int v; int x; int y; v=0;
+        // (repeat (fork(print(v); v=v-1); v=v+1) until v==3);
+        // x=1; nop; y=3; nop;
+        // print(v*10)
+
+        IStmt ex12 = new CompStmt(
+                new VarDeclStmt("v", new IntType()),
+                new CompStmt(new VarDeclStmt("x", new IntType()),
+                        new CompStmt(new VarDeclStmt("y", new IntType()),
+                                new CompStmt(new AssignStmt("v", new ValueExp(new IntValue(0))),
+                                        new CompStmt(
+                                                new RepeatUntilStmt(
+                                                        new CompStmt(
+                                                                new ForkStmt(
+                                                                        new CompStmt(
+                                                                                new PrintStmt(new VarExp("v")),
+                                                                                new AssignStmt("v", new ArithExp('-', new VarExp("v"), new ValueExp(new IntValue(1))))
+                                                                        )
+                                                                ),
+                                                                new AssignStmt("v", new ArithExp('+', new VarExp("v"), new ValueExp(new IntValue(1))))
+                                                        ),
+                                                        new RelationalExp("==", new VarExp("v"), new ValueExp(new IntValue(3)))
+                                                ),
+                                                new CompStmt(
+                                                        new AssignStmt("x", new ValueExp(new IntValue(1))),
+                                                        new CompStmt(
+                                                                new NopStmt(),
+                                                                new CompStmt(
+                                                                        new AssignStmt("y", new ValueExp(new IntValue(3))),
+                                                                        new CompStmt(
+                                                                                new NopStmt(),
+                                                                                new PrintStmt(new ArithExp('*', new VarExp("v"), new ValueExp(new IntValue(10))))
+                                                                        )
+                                                                )
+                                                        )
+                                                )
+                                        )
+                                )
+                        )
+                )
+        );
+        examples.add(ex12);
         return examples;
     }
 

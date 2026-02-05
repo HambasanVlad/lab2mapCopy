@@ -28,6 +28,7 @@ public class MyDictionary<K, V> implements MyIDictionary<K, V> {
     public V lookup(K key) throws MyException {
         V value = map.get(key);
         if (value == null) {
+            // Verificare suplimentară pentru siguranță, deși containsKey e mai bun
             throw new MyException("Variable " + key + " is not defined.");
         }
         return value;
@@ -51,7 +52,6 @@ public class MyDictionary<K, V> implements MyIDictionary<K, V> {
         return map;
     }
 
-    // --- DEEP COPY CORECT ---
     @Override
     public MyIDictionary<K, V> deepCopy() {
         MyIDictionary<K, V> toReturn = new MyDictionary<>();
@@ -59,7 +59,8 @@ public class MyDictionary<K, V> implements MyIDictionary<K, V> {
             try {
                 toReturn.put(entry.getKey(), entry.getValue());
             } catch (MyException e) {
-                // Nu ar trebui să se întâmple
+                // Această excepție nu ar trebui să apară la un put simplu pe un map nou
+                System.err.println("Eroare neașteptată la deepCopy: " + e.getMessage());
             }
         }
         return toReturn;

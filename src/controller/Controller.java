@@ -23,90 +23,100 @@ public class Controller {
 
     public Controller(IRepository repo) {
         this.repo = repo;
-        // #hashtags #modification: Initialize executor here so it's available for the GUI
+        // FIX: Inițializăm executorul AICI pentru a fi disponibil oricând, inclusiv în GUI
         this.executor = Executors.newFixedThreadPool(2);
-    }
-
-    // #hashtags #modification: Added getter for Repository so GUI can access program states
-    public IRepository getRepo() {
-        return repo;
     }
 
     public void setDisplayFlag(boolean value) {
         this.displayFlag = value;
     }
 
-    // --- GARBAGE COLLECTOR ---
-    Map<Integer, Value> safeGarbageCollector(List<Integer> symTableAddr, List<Integer> heapAddr, Map<Integer, Value> heap) {
+    public IRepository getRepo() {
+        return repo;
+    }
+
+    // --- GARBAGE COLLECTOR OPTIMIZAT ---
+    Map<Integer, Value> safeGarbageCollector(List<Integer> symTableAddr, Map<Integer, Value> heap) {
+        List<Integer> referencedAddresses = new java.util.ArrayList<>(symTableAddr);
+
+        // Iterăm pentru a găsi referințele indirecte (Heap -> Heap)
+        boolean change = true;
+        while (change) {
+            change = false;
+            List<Integer> newAddresses = heap.entrySet().stream()
+                    .filter(e -> referencedAddresses.contains(e.getKey())) // Doar nodurile deja accesibile
+                    .map(Map.Entry::getValue)
+                    .filter(v -> v instanceof RefValue)
+                    .map(v -> ((RefValue) v).getAddr())
+                    .filter(addr -> !referencedAddresses.contains(addr)) // Doar ce nu am colectat deja
+                    .collect(Collectors.toList());
+
+            if (!newAddresses.isEmpty()) {
+                referencedAddresses.addAll(newAddresses);
+                change = true;
+            }
+        }
+
+        // Păstrăm în Heap doar ce e în lista finală de adrese valide
         return heap.entrySet().stream()
-                .filter(e -> symTableAddr.contains(e.getKey()) || heapAddr.contains(e.getKey()))
+                .filter(e -> referencedAddresses.contains(e.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    List<Integer> getAddrFromSymTable(Collection<Value> symTableValues) {
-        return symTableValues.stream()
-                .filter(v -> v instanceof RefValue)
-                .map(v -> {RefValue v1 = (RefValue)v; return v1.getAddr();})
-                .collect(Collectors.toList());
-    }
-
-    List<Integer> getAddrFromHeap(Collection<Value> heapValues) {
-        return heapValues.stream()
-                .filter(v -> v instanceof RefValue)
-                .map(v -> {RefValue v1 = (RefValue)v; return v1.getAddr();})
-                .collect(Collectors.toList());
-    }
-
     // --- CONCURRENCY METHODS ---
-
     public List<PrgState> removeCompletedPrg(List<PrgState> inPrgList) {
         return inPrgList.stream()
-                .filter(p -> p.isNotCompleted())
+                .filter(PrgState::isNotCompleted)
                 .collect(Collectors.toList());
     }
 
-    // #hashtags #modification: Changed to PUBLIC so the GUI can call it
     public void oneStepForAllPrg(List<PrgState> prgList) throws InterruptedException {
-        // Logare înainte
+        // FIX DE SIGURANȚĂ: Dacă executorul a fost închis sau e null, îl recreăm
+        if (executor == null || executor.isShutdown()) {
+            executor = Executors.newFixedThreadPool(2);
+        }
+
+        // 1. Logare stare înainte de execuție
         prgList.forEach(prg -> {
             try {
                 repo.logPrgStateExec(prg);
                 if (displayFlag) System.out.println(prg.toString());
             } catch (MyException e) {
-                System.out.println("Error logging: " + e.getMessage());
+                System.out.println("Eroare la logare: " + e.getMessage());
             }
         });
 
-        // Execuție Concurentă
+        // 2. Pregătire callables
         List<Callable<PrgState>> callList = prgList.stream()
-                .map((PrgState p) -> (Callable<PrgState>)(() -> { return p.oneStep(); }))
+                .map((PrgState p) -> (Callable<PrgState>) (p::oneStep))
                 .collect(Collectors.toList());
 
+        // 3. Execuție concurentă
         List<PrgState> newPrgList = executor.invokeAll(callList).stream()
                 .map(future -> {
                     try {
                         return future.get();
                     } catch (ExecutionException | InterruptedException e) {
-                        // Ignorăm erorile "Stack empty" sau "NoSuchElement" (thread terminat)
-                        if (e.getCause() instanceof MyException || e.getCause() instanceof java.util.NoSuchElementException) {
-                            return null;
+                        // Ignorăm erorile de tip "thread terminat"
+                        if (!(e.getCause() instanceof MyException)) {
+                            System.out.println("Eroare thread: " + e.getMessage());
                         }
-                        System.out.println("Error in thread: " + e.getMessage());
                         return null;
                     }
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
 
+        // 4. Adăugare fire noi
         prgList.addAll(newPrgList);
 
-        // Logare după (ca să vedem rezultatul imediat)
+        // 5. Logare stare după execuție
         prgList.forEach(prg -> {
             try {
                 repo.logPrgStateExec(prg);
                 if (displayFlag) System.out.println(prg.toString());
             } catch (MyException e) {
-                System.out.println("Error logging: " + e.getMessage());
+                System.out.println("Eroare la logare finală: " + e.getMessage());
             }
         });
 
@@ -114,33 +124,40 @@ public class Controller {
     }
 
     public void allStep() throws InterruptedException {
-        // #hashtags #modification: Removed local executor init, using the one from constructor
+        // Asigurăm că executorul există
+        if (executor == null || executor.isShutdown()) {
+            executor = Executors.newFixedThreadPool(2);
+        }
+
         List<PrgState> prgList = removeCompletedPrg(repo.getPrgList());
 
-        while(prgList.size() > 0) {
-            // Garbage Collector
-            List<Integer> allSymTableAddr = prgList.stream()
+        while (prgList.size() > 0) {
+            // Garbage Collector apelat corect
+            List<Integer> symTableAddresses = prgList.stream()
                     .map(p -> p.getSymTable().getContent().values())
                     .flatMap(Collection::stream)
-                    .map(v -> (Value)v)
                     .filter(v -> v instanceof RefValue)
-                    .map(v -> ((RefValue)v).getAddr())
+                    .map(v -> ((RefValue) v).getAddr())
                     .collect(Collectors.toList());
 
             PrgState firstPrg = prgList.get(0);
             firstPrg.getHeap().setContent(
-                    safeGarbageCollector(
-                            allSymTableAddr,
-                            getAddrFromHeap(firstPrg.getHeap().getContent().values()),
-                            firstPrg.getHeap().getContent()
-                    )
+                    safeGarbageCollector(symTableAddresses, firstPrg.getHeap().getContent())
             );
 
             oneStepForAllPrg(prgList);
             prgList = removeCompletedPrg(repo.getPrgList());
         }
 
-        executor.shutdownNow();
+        // NOTĂ: Nu mai dăm shutdown aici pentru a nu strica GUI-ul dacă utilizatorul vrea să ruleze din nou.
+        // Executorul se va închide când aplicația se termină complet.
         repo.setPrgList(prgList);
+    }
+
+    // Metodă opțională pentru a închide corect resursele la final de tot (dacă e nevoie)
+    public void shutdownExecutor() {
+        if (executor != null && !executor.isShutdown()) {
+            executor.shutdownNow();
+        }
     }
 }
